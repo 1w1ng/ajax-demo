@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSONP实现跨域</title>
+</head>
+<body>
+	<div class="container">
+		<ul class="news">
+			<li>美方称若朝鲜政权垮台将派军进入朝 外交部回应</li>
+			<li>人社部481号文件废止 劳动合同解除经济补偿有变</li>
+			<li>李晓鹏任中国光大集团股份公司党委书记(图/简历)</li>
+		</ul>
+		<button class="btn">换一批</button>
+	</div>
+
+	<script>
+		$('.btn').addEventListener('click',function(){
+			var script = document.createElement('script');
+			script.src = 'http://localhost:8080/getNews?callback=appendHtml';
+			//当点击按钮时，会在head中生成一个script标签，并下载标签中引用的链接内容。
+			document.head.appendChild(script);
+			document.head.removeChild(script);
+			//为了避免生成太多script标签，生成之后立刻删除
+		})
+		function appendHtml(news){
+			var html = '';
+			for(var i = 0; i<news.length;i++){
+				html += '<li>' + news[i] + '</li>';
+			}
+			console.log(html);
+			$('.news').innerHTML = html;
+		}
+
+		function $(id){
+			return document.querySelector(id);
+		}
+	</script>
+</body>
+</html>

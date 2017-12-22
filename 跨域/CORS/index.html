@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CORS实现跨域</title>
+</head>
+<body>
+	<div class="container">
+		<ul class="news">
+			<li>美方称若朝鲜政权垮台将派军进入朝 外交部回应</li>
+			<li>人社部481号文件废止 劳动合同解除经济补偿有变</li>
+			<li>李晓鹏任中国光大集团股份公司党委书记(图/简历)</li>
+		</ul>
+		<button class="btn">换一批</button>
+	</div>
+
+	<script>
+		$('.btn').addEventListener('click',function(){
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET','http://127.0.0.1:8080/getNews',true);
+			xhr.send();
+			xhr.onload = function(){
+				appendHtml(JSON.parse(xhr.responseText))
+			}
+		})
+		
+		function appendHtml(news){
+			var html = '';
+			for(var i = 0; i<news.length;i++){
+				html += '<li>' + news[i] + '</li>';
+			}
+			console.log(html);
+			$('.news').innerHTML = html;
+		}
+
+		function $(id){
+			return document.querySelector(id);
+		}
+	</script>
+</body>
+</html>

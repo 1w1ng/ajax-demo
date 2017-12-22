@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>postMessage</title>
+	<style>
+		html,body{
+			margin: 0;
+		}
+		input{
+			margin: 20px;
+			width: 200px;
+		}
+	</style>
+</head>
+<body>
+	<input id="input" type="text"  placeholder="http://b.jrg.com:8080/b.html">
+	<script>
+	// URL: http://b.jrg.com:8080/b.html
+	$('#input').addEventListener('input', function(){
+		//将当前窗口的值通过.postMessage发送给window.parent所选中的窗口
+		window.parent.postMessage(this.value, '*');//'*':代表任何网站
+	})
+	//这个事件监听从a.html发送过来的数据
+	window.addEventListener('message',function(e) {
+			$('#input').value = e.data
+	    console.log(e.data);
+	});
+	function $(id){
+		return document.querySelector(id);
+	}
+	</script>
+</body>
+
+
+</html>
